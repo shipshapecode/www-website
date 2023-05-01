@@ -44,9 +44,6 @@ export default function Episode({ episode }) {
                 />
               </div>
             </div>
-            <p className="ml-24 mt-3 text-lg font-medium leading-8 text-slate-700">
-              {episode.description}
-            </p>
           </header>
           <hr className="my-12 border-gray-200" />
           <div

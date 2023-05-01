@@ -56,7 +56,7 @@ function EpisodeEntry({ episode }) {
             date={date}
             className="order-first font-mono text-sm leading-7 text-slate-500"
           />
-          <p className="mt-1 text-base leading-7 text-slate-700">
+          <p className="mt-1 text-base leading-7 line-clamp-5 text-slate-700">
             {episode.description}
           </p>
           <div className="mt-4 flex items-center gap-4">
