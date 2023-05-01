@@ -163,7 +163,7 @@ function AboutSection(props) {
       {!isExpanded && (
         <button
           type="button"
-          className="mt-2 hidden text-sm transition-colors font-bold leading-6 text-pink-500 hover:text-pink-700 active:text-pink-900 lg:inline-block"
+          className="mt-2 hidden text-sm font-bold leading-6 text-pink-500 transition-colors hover:text-pink-700 active:text-pink-900 lg:inline-block"
           onClick={() => setIsExpanded(true)}
         >
           Show more
@@ -262,7 +262,7 @@ export function Layout({ children }) {
                     className="group flex items-center"
                     aria-label={label}
                   >
-                    <Icon className="h-8 transition-colors w-8 fill-slate-400 group-hover:fill-slate-600" />
+                    <Icon className="h-8 w-8 fill-slate-400 transition-colors group-hover:fill-slate-600" />
                     <span className="hidden sm:ml-3 sm:block">{label}</span>
                   </Link>
                 </li>

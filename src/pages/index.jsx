@@ -56,14 +56,14 @@ function EpisodeEntry({ episode }) {
             date={date}
             className="order-first font-mono text-sm leading-7 text-slate-500"
           />
-          <p className="mt-1 text-base leading-7 line-clamp-5 text-slate-700">
+          <p className="mt-1 line-clamp-5 text-base leading-7 text-slate-700">
             {episode.description}
           </p>
           <div className="mt-4 flex items-center gap-4">
             <button
               type="button"
               onClick={() => player.toggle()}
-              className="flex items-center text-sm font-bold leading-6 text-pink-500 hover:text-pink-700 active:text-pink-900"
+              className="flex items-center text-sm font-bold leading-6 text-pink-500 transition-colors hover:text-pink-700 active:text-pink-900"
               aria-label={`${player.playing ? 'Pause' : 'Play'} episode ${
                 episode.title
               }`}
@@ -84,7 +84,7 @@ function EpisodeEntry({ episode }) {
             </span>
             <Link
               href={`/${episode.id}`}
-              className="flex items-center text-sm font-bold leading-6 text-pink-500 hover:text-pink-700 active:text-pink-900"
+              className="flex items-center text-sm font-bold leading-6 text-pink-500 transition-colors hover:text-pink-700 active:text-pink-900"
               aria-label={`Show notes for episode ${episode.title}`}
             >
               Show notes
