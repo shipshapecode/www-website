@@ -6,6 +6,7 @@ import { parse } from 'rss-to-json'
 import { useAudioPlayer } from '@/components/AudioProvider'
 import { Container } from '@/components/Container'
 import { FormattedDate } from '@/components/FormattedDate'
+import { dasherize } from '@/utils/dasherize'
 
 function PlayPauseIcon({ playing, ...props }) {
   return (
@@ -24,9 +25,10 @@ function PlayPauseIcon({ playing, ...props }) {
 }
 
 function EpisodeEntry({ episode }) {
-  let date = new Date(episode.published)
+  const date = new Date(episode.published)
+  const episodeLink = `/${dasherize(episode.title)}`
 
-  let audioPlayerData = useMemo(
+  const audioPlayerData = useMemo(
     () => ({
       title: episode.title,
       audio: {
@@ -37,7 +39,7 @@ function EpisodeEntry({ episode }) {
     }),
     [episode]
   )
-  let player = useAudioPlayer(audioPlayerData)
+  const player = useAudioPlayer(audioPlayerData)
 
   return (
     <article
@@ -50,7 +52,7 @@ function EpisodeEntry({ episode }) {
             id={`episode-${episode.id}-title`}
             className="mt-2 text-lg font-bold text-slate-900"
           >
-            <Link href={`/${episode.id}`}>{episode.title}</Link>
+            <Link href={episodeLink}>{episode.title}</Link>
           </h2>
           <FormattedDate
             date={date}
@@ -83,7 +85,7 @@ function EpisodeEntry({ episode }) {
               /
             </span>
             <Link
-              href={`/${episode.id}`}
+              href={episodeLink}
               className="flex items-center text-sm font-bold leading-6 text-pink-500 transition-colors hover:text-pink-700 active:text-pink-900"
               aria-label={`Show notes for episode ${episode.title}`}
             >
