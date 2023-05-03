@@ -7,7 +7,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
 export function FormattedDate({ date, ...props }) {
   return (
     <time dateTime={date.toISOString()} {...props}>
-      {dateFormatter.format(date)}
+      {date}
     </time>
   );
 }
