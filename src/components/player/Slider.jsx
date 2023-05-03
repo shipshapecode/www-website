@@ -1,38 +1,38 @@
-import { useRef } from 'react'
+import { useRef } from 'react';
 import {
   mergeProps,
   useFocusRing,
   useSlider,
   useSliderThumb,
   VisuallyHidden,
-} from 'react-aria'
-import { useSliderState } from 'react-stately'
-import clsx from 'clsx'
+} from 'react-aria';
+import { useSliderState } from 'react-stately';
+import clsx from 'clsx';
 
 function parseTime(seconds) {
-  let hours = Math.floor(seconds / 3600)
-  let minutes = Math.floor((seconds - hours * 3600) / 60)
-  seconds = seconds - hours * 3600 - minutes * 60
-  return [hours, minutes, seconds]
+  let hours = Math.floor(seconds / 3600);
+  let minutes = Math.floor((seconds - hours * 3600) / 60);
+  seconds = seconds - hours * 3600 - minutes * 60;
+  return [hours, minutes, seconds];
 }
 
 function formatTime(seconds, totalSeconds = seconds) {
   let totalWithoutLeadingZeroes = totalSeconds.slice(
     totalSeconds.findIndex((x) => x !== 0)
-  )
+  );
   return seconds
     .slice(seconds.length - totalWithoutLeadingZeroes.length)
     .map((x) => x.toString().padStart(2, '0'))
-    .join(':')
+    .join(':');
 }
 
 function Thumb(props) {
-  let { state, trackRef, focusProps, isFocusVisible, index } = props
-  let inputRef = useRef(null)
+  let { state, trackRef, focusProps, isFocusVisible, index } = props;
+  let inputRef = useRef(null);
   let { thumbProps, inputProps } = useSliderThumb(
     { index, trackRef, inputRef },
     state
-  )
+  );
 
   return (
     <div
@@ -44,12 +44,12 @@ function Thumb(props) {
       <div
         {...thumbProps}
         onMouseDown={(...args) => {
-          thumbProps.onMouseDown(...args)
-          props.onChangeStart?.()
+          thumbProps.onMouseDown(...args);
+          props.onChangeStart?.();
         }}
         onPointerDown={(...args) => {
-          thumbProps.onPointerDown(...args)
-          props.onChangeStart?.()
+          thumbProps.onPointerDown(...args);
+          props.onChangeStart?.();
         }}
         className={clsx(
           'h-4 rounded-full',
@@ -63,21 +63,21 @@ function Thumb(props) {
         </VisuallyHidden>
       </div>
     </div>
-  )
+  );
 }
 
 export function Slider(props) {
-  let trackRef = useRef(null)
-  let state = useSliderState(props)
+  let trackRef = useRef(null);
+  let state = useSliderState(props);
   let { groupProps, trackProps, labelProps, outputProps } = useSlider(
     props,
     state,
     trackRef
-  )
-  let { focusProps, isFocusVisible } = useFocusRing()
+  );
+  let { focusProps, isFocusVisible } = useFocusRing();
 
-  let currentTime = parseTime(state.getThumbValue(0))
-  let totalTime = parseTime(state.getThumbMaxValue(0))
+  let currentTime = parseTime(state.getThumbValue(0));
+  let totalTime = parseTime(state.getThumbMaxValue(0));
 
   return (
     <div
@@ -92,12 +92,12 @@ export function Slider(props) {
       <div
         {...trackProps}
         onMouseDown={(...args) => {
-          trackProps.onMouseDown(...args)
-          props.onChangeStart?.()
+          trackProps.onMouseDown(...args);
+          props.onChangeStart?.();
         }}
         onPointerDown={(...args) => {
-          trackProps.onPointerDown(...args)
-          props.onChangeStart?.()
+          trackProps.onPointerDown(...args);
+          props.onChangeStart?.();
         }}
         ref={trackRef}
         className="relative w-full bg-slate-100 md:rounded-full"
@@ -156,5 +156,5 @@ export function Slider(props) {
         </span>
       </div>
     </div>
-  )
+  );
 }

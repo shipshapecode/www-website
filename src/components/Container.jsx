@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import clsx from 'clsx';
 
 export function Container({ className, children, ...props }) {
   return (
@@ -9,5 +9,5 @@ export function Container({ className, children, ...props }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

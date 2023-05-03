@@ -1,16 +1,16 @@
-import { useMemo } from 'react'
-import Head from 'next/head'
-import { parse } from 'rss-to-json'
+import { useMemo } from 'react';
+import Head from 'next/head';
+import { parse } from 'rss-to-json';
 
-import { useAudioPlayer } from '@/components/AudioProvider'
-import { Container } from '@/components/Container'
-import { FormattedDate } from '@/components/FormattedDate'
-import { PlayButton } from '@/components/player/PlayButton'
-import { dasherize } from '@/utils/dasherize'
-import { truncate } from '@/utils/truncate'
+import { useAudioPlayer } from '@/components/AudioProvider';
+import { Container } from '@/components/Container';
+import { FormattedDate } from '@/components/FormattedDate';
+import { PlayButton } from '@/components/player/PlayButton';
+import { dasherize } from '@/utils/dasherize';
+import { truncate } from '@/utils/truncate';
 
 export default function Episode({ episode }) {
-  let date = new Date(episode.published)
+  let date = new Date(episode.published);
 
   let audioPlayerData = useMemo(
     () => ({
@@ -22,8 +22,8 @@ export default function Episode({ episode }) {
       link: `/${episode.id}`,
     }),
     [episode]
-  )
-  let player = useAudioPlayer(audioPlayerData)
+  );
+  let player = useAudioPlayer(audioPlayerData);
 
   return (
     <>
@@ -55,15 +55,14 @@ export default function Episode({ episode }) {
         </Container>
       </article>
     </>
-  )
+  );
 }
 
 export async function getStaticProps({ params }) {
-  console.log(params)
-  let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253')
+  let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253');
   let episode = feed.items
     .map(({ id, title, description, content, enclosures, published }) => {
-      const episodeSlug = dasherize(title)
+      const episodeSlug = dasherize(title);
 
       return {
         id: id.toString(),
@@ -76,14 +75,14 @@ export async function getStaticProps({ params }) {
           src: enclosure.url,
           type: enclosure.type,
         }))[0],
-      }
+      };
     })
-    .find(({ episodeSlug }) => episodeSlug === params.episode)
+    .find(({ episodeSlug }) => episodeSlug === params.episode);
 
   if (!episode) {
     return {
       notFound: true,
-    }
+    };
   }
 
   return {
@@ -91,11 +90,11 @@ export async function getStaticProps({ params }) {
       episode,
     },
     revalidate: 10,
-  }
+  };
 }
 
 export async function getStaticPaths() {
-  let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253')
+  let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253');
 
   return {
     paths: feed.items.map(({ id }) => ({
@@ -104,5 +103,5 @@ export async function getStaticPaths() {
       },
     })),
     fallback: 'blocking',
-  }
+  };
 }

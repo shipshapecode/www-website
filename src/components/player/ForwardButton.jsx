@@ -20,7 +20,7 @@ function ForwardIcon(props) {
         strokeLinejoin="round"
       />
     </svg>
-  )
+  );
 }
 
 export function ForwardButton({ player, amount = 10 }) {
@@ -34,5 +34,5 @@ export function ForwardButton({ player, amount = 10 }) {
       <div className="absolute -inset-4 -left-2 md:hidden" />
       <ForwardIcon className="h-6 w-6 stroke-slate-500 group-hover:stroke-slate-700" />
     </button>
-  )
+  );
 }

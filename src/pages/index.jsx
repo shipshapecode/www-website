@@ -1,12 +1,12 @@
-import { useMemo } from 'react'
-import Head from 'next/head'
-import Link from 'next/link'
-import { parse } from 'rss-to-json'
+import { useMemo } from 'react';
+import Head from 'next/head';
+import Link from 'next/link';
+import { parse } from 'rss-to-json';
 
-import { useAudioPlayer } from '@/components/AudioProvider'
-import { Container } from '@/components/Container'
-import { FormattedDate } from '@/components/FormattedDate'
-import { dasherize } from '@/utils/dasherize'
+import { useAudioPlayer } from '@/components/AudioProvider';
+import { Container } from '@/components/Container';
+import { FormattedDate } from '@/components/FormattedDate';
+import { dasherize } from '@/utils/dasherize';
 
 function PlayPauseIcon({ playing, ...props }) {
   return (
@@ -21,12 +21,12 @@ function PlayPauseIcon({ playing, ...props }) {
         <path d="M8.25 4.567a.5.5 0 0 1 0 .866l-7.5 4.33A.5.5 0 0 1 0 9.33V.67A.5.5 0 0 1 .75.237l7.5 4.33Z" />
       )}
     </svg>
-  )
+  );
 }
 
 function EpisodeEntry({ episode }) {
-  const date = new Date(episode.published)
-  const episodeLink = `/${dasherize(episode.title)}`
+  const date = new Date(episode.published);
+  const episodeLink = `/${dasherize(episode.title)}`;
 
   const audioPlayerData = useMemo(
     () => ({
@@ -38,8 +38,8 @@ function EpisodeEntry({ episode }) {
       link: `/${episode.id}`,
     }),
     [episode]
-  )
-  const player = useAudioPlayer(audioPlayerData)
+  );
+  const player = useAudioPlayer(audioPlayerData);
 
   return (
     <article
@@ -95,7 +95,7 @@ function EpisodeEntry({ episode }) {
         </div>
       </Container>
     </article>
-  )
+  );
 }
 
 export default function Home({ episodes }) {
@@ -124,11 +124,11 @@ export default function Home({ episodes }) {
         </div>
       </div>
     </>
-  )
+  );
 }
 
 export async function getStaticProps() {
-  let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253')
+  let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253');
 
   return {
     props: {
@@ -146,5 +146,5 @@ export async function getStaticProps() {
       ),
     },
     revalidate: 10,
-  }
+  };
 }

@@ -1,8 +1,8 @@
-import { AudioProvider } from '@/components/AudioProvider'
-import { Layout } from '@/components/Layout'
+import { AudioProvider } from '@/components/AudioProvider';
+import { Layout } from '@/components/Layout';
 
-import '@/styles/tailwind.css'
-import 'focus-visible'
+import '@/styles/tailwind.css';
+import 'focus-visible';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -11,5 +11,5 @@ export default function App({ Component, pageProps }) {
         <Component {...pageProps} />
       </Layout>
     </AudioProvider>
-  )
+  );
 }
