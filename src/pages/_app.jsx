@@ -1,5 +1,6 @@
-import { AudioProvider } from '@/components/AudioProvider';
+import { Analytics } from '@vercel/analytics/react';
 import { NextIntlProvider } from 'next-intl';
+import { AudioProvider } from '@/components/AudioProvider';
 import { Layout } from '@/components/Layout';
 
 import '@/styles/tailwind.css';
@@ -11,6 +12,7 @@ export default function App({ Component, pageProps }) {
       <AudioProvider>
         <Layout>
           <Component {...pageProps} />
+          <Analytics />
         </Layout>
       </AudioProvider>
     </NextIntlProvider>
