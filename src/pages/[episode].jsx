@@ -7,7 +7,6 @@ import fs from 'fs';
 import path from 'path';
 import { remark } from 'remark';
 import html from 'remark-html';
-import { parse } from 'rss-to-json';
 
 import { useAudioPlayer } from '@/components/AudioProvider';
 import { Container } from '@/components/Container';
