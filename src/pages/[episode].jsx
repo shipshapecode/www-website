@@ -61,6 +61,7 @@ export default function Episode({ episode, transcript }) {
                 <h1 className="mt-2 text-4xl font-bold text-slate-900">
                   {episode.title}
                 </h1>
+
                 <FormattedDate
                   date={date}
                   className="order-first font-mono text-sm leading-7 text-slate-500"
@@ -68,6 +69,7 @@ export default function Episode({ episode, transcript }) {
               </div>
             </div>
           </header>
+
           <hr className="my-12 border-gray-200" />
 
           <section className="mt-14">
@@ -91,10 +93,13 @@ export default function Episode({ episode, transcript }) {
                 "prose prose-slate [&>h2:nth-of-type(3n)]:before:bg-violet-200 [&>h2:nth-of-type(3n+2)]:before:bg-indigo-200 [&>h2]:mt-12 [&>h2]:flex [&>h2]:items-center [&>h2]:font-mono [&>h2]:text-sm [&>h2]:font-medium [&>h2]:leading-7 [&>h2]:text-slate-900 [&>h2]:before:mr-3 [&>h2]:before:h-3 [&>h2]:before:w-1.5 [&>h2]:before:rounded-r-full [&>h2]:before:bg-cyan-200 [&>ul]:mt-6 [&>ul]:list-['3'] [&>ul]:pl-5",
                 !isExpanded && 'lg:line-clamp-4'
               )}
-              dangerouslySetInnerHTML={{ __html: transcript }}
+              dangerouslySetInnerHTML={{
+                __html:
+                  transcript || 'No transcript is available for this episode.',
+              }}
             />
 
-            {!isExpanded && (
+            {!isExpanded && transcript && (
               <button
                 type="button"
                 className="mt-2 hidden text-sm font-bold leading-6 text-pink-500 transition-colors hover:text-pink-700 active:text-pink-900 lg:inline-block"
@@ -113,22 +118,26 @@ export default function Episode({ episode, transcript }) {
 export async function getStaticProps({ params }) {
   let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253');
   let episode = feed.items
-    .map(({ id, title, description, content, enclosures, published }) => {
-      const episodeSlug = dasherize(title);
+    .map(
+      ({ id, title, description, content, enclosures, published }, index) => {
+        const episodeNumber = feed.items.length - 1;
+        const episodeSlug = dasherize(title);
 
-      return {
-        id: id.toString(),
-        title: `${title}`,
-        description,
-        content,
-        episodeSlug,
-        published,
-        audio: enclosures.map((enclosure) => ({
-          src: enclosure.url,
-          type: enclosure.type,
-        }))[0],
-      };
-    })
+        return {
+          id: id.toString(),
+          title: `${title}`,
+          description,
+          content,
+          episodeNumber,
+          episodeSlug,
+          published,
+          audio: enclosures.map((enclosure) => ({
+            src: enclosure.url,
+            type: enclosure.type,
+          }))[0],
+        };
+      }
+    )
     .find(({ episodeSlug }) => episodeSlug === params.episode);
 
   if (!episode) {
@@ -152,7 +161,7 @@ export async function getStaticProps({ params }) {
       transcript = transcript?.toString();
     }
   } catch {
-    transcript = 'No transcript is available for this episode.';
+    transcript = '';
   }
 
   return {
