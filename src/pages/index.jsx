@@ -1,15 +1,34 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Head from 'next/head';
 import Link from 'next/link';
-
-import { parse } from 'rss-to-json';
 
 import { useAudioPlayer } from '@/components/AudioProvider';
 import { Container } from '@/components/Container';
 import { FormattedDate } from '@/components/FormattedDate';
 import { dasherize } from '@/utils/dasherize';
 import { truncate } from '@/utils/truncate';
+
+async function fetchEpisodes(page = 1) {
+  const headers = new Headers({
+    'Access-Control-Allow-Origin': '*',
+    Authorization: 'Token token="5596a4249c004ae62d6ba7d56b02465c"',
+    'Content-Type': 'application/json',
+  });
+
+  const requestOptions = {
+    method: 'GET',
+    headers,
+    cache: 'no-cache',
+  };
+  const response = await fetch(
+    `https://cms.megaphone.fm/api/networks/a093ccf8-8107-11ea-a979-6ba9a9362965/podcasts/4516d296-4d41-11ec-a488-cfb25d03873a/episodes?page=${page}&per_page=12`,
+    requestOptions
+  );
+  const episodes = await response.json();
+
+  return episodes;
+}
 
 function PlayPauseIcon({ playing, ...props }) {
   return (
@@ -105,11 +124,45 @@ function EpisodeEntry({ episode }) {
 }
 
 export default function Home({ episodes }) {
+  const [recentEpisodes, setRecentEpisodes] = useState(episodes);
+  // starting from page 2 due to static props fetch of page 1
+  const [page, setPage] = useState(2);
+
   const description =
     'Veteran web developers, and whiskey connoisseurs, RobbieTheWagner and ' +
     'Charles William Carpenter III host this informal web development podcast ' +
     'covering a wide array of topics including TypeScript, Tailwind, tractors, TV ' +
     'shows and everything in-between.';
+
+  async function fetchMoreEpisodes() {
+    const moreEpisodes = await fetchEpisodes(page);
+    setRecentEpisodes([...recentEpisodes, moreEpisodes]);
+    setPage(page + 1);
+  }
+
+  useEffect(() => {
+    const debounce = (callback, wait) => {
+      let timeoutId = null;
+      return (...args) => {
+        window.clearTimeout(timeoutId);
+        timeoutId = window.setTimeout(() => {
+          callback.apply(null, args);
+        }, wait);
+      };
+    };
+    const handleScroll = debounce((ev) => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        fetchMoreEpisodes();
+      }
+    }, 250);
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  });
+
   return (
     <>
       <Head>
@@ -126,7 +179,7 @@ export default function Home({ episodes }) {
           </h1>
         </Container>
         <div className="divide-y divide-slate-100 sm:mt-4 lg:mt-8 lg:border-t lg:border-slate-100">
-          {episodes.map((episode) => (
+          {recentEpisodes.map((episode) => (
             <EpisodeEntry key={episode.id} episode={episode} />
           ))}
         </div>
@@ -136,34 +189,22 @@ export default function Home({ episodes }) {
 }
 
 export async function getStaticProps() {
-  let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253');
+  const episodes = await fetchEpisodes();
 
   return {
     props: {
-      episodes: feed.items
-        .filter((item) => item.itunes_episodeType !== 'trailer')
-        .map(
-          ({
-            id,
-            title,
-            description,
-            enclosures,
-            published,
-            itunes_episode,
-          }) => {
-            return {
-              id,
-              title: `${title}`,
-              published,
-              description: truncate(description, 275),
-              episodeNumber: itunes_episode,
-              audio: enclosures.map((enclosure) => ({
-                src: enclosure.url,
-                type: enclosure.type,
-              }))[0],
-            };
-          }
-        ),
+      episodes: episodes.map(
+        ({ id, title, summary, audioFile, createdAt }) => ({
+          id,
+          title: `${title}`,
+          published: createdAt,
+          description: summary,
+          audio: {
+            src: audioFile,
+            type: 'audio/mpeg',
+          },
+        })
+      ),
     },
     revalidate: 10,
   };
