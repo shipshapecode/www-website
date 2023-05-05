@@ -106,7 +106,6 @@ export default function Home({ episodes }) {
     'Charles William Carpenter III host this informal web development podcast ' +
     'covering a wide array of topics including TypeScript, Tailwind, tractors, TV ' +
     'shows and everything in-between.';
-  const imageURL = 'http://whiskeywebandwhatnot.fm/images/www.png';
   return (
     <>
       <Head>
@@ -115,9 +114,6 @@ export default function Home({ episodes }) {
           favorite web developers.
         </title>
         <meta name="description" content={description} />
-        <meta content={imageURL} name="og:image"></meta>
-        <meta content={imageURL} name="twitter:image:src"></meta>
-        <meta content="summary_large_image" name="twitter:card" />
       </Head>
       <div className="pb-12 pt-16 sm:pb-4 lg:pt-12">
         <Container>
