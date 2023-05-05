@@ -104,7 +104,7 @@ export default function Home({ episodes }) {
   const description =
     'Veteran web developers, and whiskey connoisseurs, RobbieTheWagner and ' +
     'Charles William Carpenter III host this informal web development podcast ' +
-    'covering a wide array of topics like TypeScript, Tailwind, tractors, TV ' +
+    'covering a wide array of topics including TypeScript, Tailwind, tractors, TV ' +
     'shows and everything in-between.';
   const imageURL = 'http://whiskeywebandwhatnot.fm/images/www.png';
   return (
