@@ -1,7 +1,10 @@
+import { useMemo, useState } from 'react';
+
+import Head from 'next/head';
+
+import clsx from 'clsx';
 import fs from 'fs';
 import path from 'path';
-import { useMemo } from 'react';
-import Head from 'next/head';
 import { remark } from 'remark';
 import html from 'remark-html';
 import { parse } from 'rss-to-json';
@@ -14,6 +17,7 @@ import { dasherize } from '@/utils/dasherize';
 import { truncate } from '@/utils/truncate';
 
 export default function Episode({ episode, transcript }) {
+  let [isExpanded, setIsExpanded] = useState(false);
   let date = new Date(episode.published);
 
   let audioPlayerData = useMemo(
@@ -83,9 +87,22 @@ export default function Episode({ episode, transcript }) {
             </h3>
 
             <article
-              className="prose prose-slate [&>h2:nth-of-type(3n)]:before:bg-violet-200 [&>h2:nth-of-type(3n+2)]:before:bg-indigo-200 [&>h2]:mt-12 [&>h2]:flex [&>h2]:items-center [&>h2]:font-mono [&>h2]:text-sm [&>h2]:font-medium [&>h2]:leading-7 [&>h2]:text-slate-900 [&>h2]:before:mr-3 [&>h2]:before:h-3 [&>h2]:before:w-1.5 [&>h2]:before:rounded-r-full [&>h2]:before:bg-cyan-200 [&>ul]:mt-6 [&>ul]:list-['\2013\20'] [&>ul]:pl-5"
+              className={clsx(
+                "prose prose-slate [&>h2:nth-of-type(3n)]:before:bg-violet-200 [&>h2:nth-of-type(3n+2)]:before:bg-indigo-200 [&>h2]:mt-12 [&>h2]:flex [&>h2]:items-center [&>h2]:font-mono [&>h2]:text-sm [&>h2]:font-medium [&>h2]:leading-7 [&>h2]:text-slate-900 [&>h2]:before:mr-3 [&>h2]:before:h-3 [&>h2]:before:w-1.5 [&>h2]:before:rounded-r-full [&>h2]:before:bg-cyan-200 [&>ul]:mt-6 [&>ul]:list-['3'] [&>ul]:pl-5",
+                !isExpanded && 'lg:line-clamp-4'
+              )}
               dangerouslySetInnerHTML={{ __html: transcript }}
             />
+
+            {!isExpanded && (
+              <button
+                type="button"
+                className="mt-2 hidden text-sm font-bold leading-6 text-pink-500 transition-colors hover:text-pink-700 active:text-pink-900 lg:inline-block"
+                onClick={() => setIsExpanded(true)}
+              >
+                Show more
+              </button>
+            )}
           </section>
         </Container>
       </article>

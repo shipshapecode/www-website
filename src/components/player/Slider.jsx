@@ -1,12 +1,13 @@
 import { useRef } from 'react';
 import {
+  VisuallyHidden,
   mergeProps,
   useFocusRing,
   useSlider,
   useSliderThumb,
-  VisuallyHidden,
 } from 'react-aria';
 import { useSliderState } from 'react-stately';
+
 import clsx from 'clsx';
 
 function parseTime(seconds) {

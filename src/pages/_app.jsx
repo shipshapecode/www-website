@@ -1,10 +1,11 @@
-import { Analytics } from '@vercel/analytics/react';
 import { NextIntlProvider } from 'next-intl';
+
+import { Analytics } from '@vercel/analytics/react';
+import 'focus-visible';
+
 import { AudioProvider } from '@/components/AudioProvider';
 import { Layout } from '@/components/Layout';
-
 import '@/styles/tailwind.css';
-import 'focus-visible';
 
 export default function App({ Component, pageProps }) {
   return (

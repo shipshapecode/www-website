@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
+
 import Link from 'next/link';
 
 import { useAudioPlayer } from '@/components/AudioProvider';
 import { ForwardButton } from '@/components/player/ForwardButton';
 import { MuteButton } from '@/components/player/MuteButton';
-import { PlaybackRateButton } from '@/components/player/PlaybackRateButton';
 import { PlayButton } from '@/components/player/PlayButton';
+import { PlaybackRateButton } from '@/components/player/PlaybackRateButton';
 import { RewindButton } from '@/components/player/RewindButton';
 import { Slider } from '@/components/player/Slider';
 
