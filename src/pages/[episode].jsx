@@ -36,18 +36,18 @@ export default function Episode({ episode, transcript }) {
   return (
     <>
       <Head>
-        <title>{`${episode.title} - Whiskey Web and Whatnot`}</title>
+        <title>{`${episode.title} - Whiskey Web and Whatnot ${episode.episodeNumber}`}</title>
         <meta name="description" content={truncate(episode.description, 260)} />
         <meta property="og:site_name" content="Whiskey Web and Whatnot" />
         <meta property="og:audio" content={episode.audio.src} />
         <meta property="og:audio:secure_url" content={episode.audio.src} />
         <meta property="og:audio:type" content="audio/mpeg" />
         <meta
-          content="https://images.podpage.com/https%3A%2F%2Fs3.us-west-1.amazonaws.com%2Fredwood-labs%2Fshowpage%2Fuploads%2Fimages%2F710b4b23-aea5-407e-99cb-9cefa2a5a37e.png?auto=format&amp;fill=blur&amp;fit=fill&amp;h=628&amp;w=1200&amp;s=7692a185ab8fa203a5e63d00439c6dd8"
+          content="http://whiskeywebandwhatnot.fm/images/www.png"
           name="og:image"
         ></meta>
         <meta
-          content="https://images.podpage.com/https%3A%2F%2Fs3.us-west-1.amazonaws.com%2Fredwood-labs%2Fshowpage%2Fuploads%2Fimages%2F710b4b23-aea5-407e-99cb-9cefa2a5a37e.png?auto=format&amp;fill=blur&amp;fit=fill&amp;h=628&amp;w=1200&amp;s=7692a185ab8fa203a5e63d00439c6dd8"
+          content="http://whiskeywebandwhatnot.fm/images/www.png"
           name="twitter:image:src"
         ></meta>
         <meta content="summary_large_image" name="twitter:card" />
