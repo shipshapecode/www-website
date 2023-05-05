@@ -101,6 +101,12 @@ function EpisodeEntry({ episode }) {
 }
 
 export default function Home({ episodes }) {
+  const description =
+    'Veteran web developers, and whiskey connoisseurs, RobbieTheWagner and ' +
+    'Charles William Carpenter III host this informal web development podcast ' +
+    'covering a wide array of topics like TypeScript, Tailwind, tractors, TV ' +
+    'shows and everything in-between.';
+  const imageURL = 'http://whiskeywebandwhatnot.fm/images/www.png';
   return (
     <>
       <Head>
@@ -108,10 +114,10 @@ export default function Home({ episodes }) {
           Whiskey Web and Whatnot - A whiskey fueled fireside chat with your
           favorite web developers.
         </title>
-        <meta
-          name="description"
-          content="A whiskey fueled fireside chat with your favorite web developers."
-        />
+        <meta name="description" content={description} />
+        <meta content={imageURL} name="og:image"></meta>
+        <meta content={imageURL} name="twitter:image:src"></meta>
+        <meta content="summary_large_image" name="twitter:card" />
       </Head>
       <div className="pb-12 pt-16 sm:pb-4 lg:pt-12">
         <Container>

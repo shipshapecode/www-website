@@ -42,15 +42,6 @@ export default function Episode({ episode, transcript }) {
         <meta property="og:audio" content={episode.audio.src} />
         <meta property="og:audio:secure_url" content={episode.audio.src} />
         <meta property="og:audio:type" content="audio/mpeg" />
-        <meta
-          content="http://whiskeywebandwhatnot.fm/images/www.png"
-          name="og:image"
-        ></meta>
-        <meta
-          content="http://whiskeywebandwhatnot.fm/images/www.png"
-          name="twitter:image:src"
-        ></meta>
-        <meta content="summary_large_image" name="twitter:card" />
       </Head>
       <article className="py-16 lg:py-36">
         <Container>
