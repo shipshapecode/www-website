@@ -3,32 +3,12 @@ import { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import { fetchEpisodes } from '@/pages/api/podcast';
 import { useAudioPlayer } from '@/components/AudioProvider';
 import { Container } from '@/components/Container';
 import { FormattedDate } from '@/components/FormattedDate';
 import { dasherize } from '@/utils/dasherize';
 import { truncate } from '@/utils/truncate';
-
-async function fetchEpisodes(page = 1) {
-  const headers = new Headers({
-    'Access-Control-Allow-Origin': '*',
-    Authorization: 'Token token="5596a4249c004ae62d6ba7d56b02465c"',
-    'Content-Type': 'application/json',
-  });
-
-  const requestOptions = {
-    method: 'GET',
-    headers,
-    cache: 'no-cache',
-  };
-  const response = await fetch(
-    `https://cms.megaphone.fm/api/networks/a093ccf8-8107-11ea-a979-6ba9a9362965/podcasts/4516d296-4d41-11ec-a488-cfb25d03873a/episodes?page=${page}&per_page=12`,
-    requestOptions
-  );
-  const episodes = await response.json();
-
-  return episodes;
-}
 
 function PlayPauseIcon({ playing, ...props }) {
   return (
@@ -48,6 +28,7 @@ function PlayPauseIcon({ playing, ...props }) {
 
 function EpisodeEntry({ episode }) {
   const date = new Date(episode.published);
+
   const episodeLink = `/${dasherize(episode.title)}`;
 
   const audioPlayerData = useMemo(
@@ -66,6 +47,7 @@ function EpisodeEntry({ episode }) {
   return (
     <article
       aria-labelledby={`episode-${episode.id}-title`}
+      key={`episode-${episode.id}-title`}
       className="py-10 sm:py-12"
     >
       <Container>
@@ -135,8 +117,10 @@ export default function Home({ episodes }) {
     'shows and everything in-between.';
 
   async function fetchMoreEpisodes() {
-    const moreEpisodes = await fetchEpisodes(page);
-    setRecentEpisodes([...recentEpisodes, moreEpisodes]);
+    const episodeResponse = await fetch('/api/podcast');
+    const moreEpisodes = await episodeResponse.json();
+
+    setRecentEpisodes([...recentEpisodes, ...moreEpisodes]);
     setPage(page + 1);
   }
 
@@ -193,18 +177,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      episodes: episodes.map(
-        ({ id, title, summary, audioFile, createdAt }) => ({
-          id,
-          title: `${title}`,
-          published: createdAt,
-          description: summary,
-          audio: {
-            src: audioFile,
-            type: 'audio/mpeg',
-          },
-        })
-      ),
+      episodes,
     },
     revalidate: 10,
   };
