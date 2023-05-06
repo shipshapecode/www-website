@@ -9,6 +9,7 @@ import { useAudioPlayer } from '@/components/AudioProvider';
 import { Container } from '@/components/Container';
 import { FormattedDate } from '@/components/FormattedDate';
 import { dasherize } from '@/utils/dasherize';
+import { truncate } from '@/utils/truncate';
 
 function PlayPauseIcon({ playing, ...props }) {
   return (
@@ -141,7 +142,7 @@ export async function getStaticProps() {
           id,
           title: `${title}`,
           published,
-          description,
+          description: truncate(description, 275),
           audio: enclosures.map((enclosure) => ({
             src: enclosure.url,
             type: enclosure.type,
