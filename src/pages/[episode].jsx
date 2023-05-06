@@ -36,7 +36,7 @@ export default function Episode({ episode, transcript }) {
   return (
     <>
       <Head>
-        <title>{`${episode.title} - Whiskey Web and Whatnot ${episode.episodeNumber}`}</title>
+        <title>{`${episode.title} - Whiskey Web and Whatnot - Episode ${episode.episodeNumber}`}</title>
         <meta name="description" content={truncate(episode.description, 260)} />
         <meta property="og:site_name" content="Whiskey Web and Whatnot" />
         <meta property="og:audio" content={episode.audio.src} />
@@ -109,9 +109,14 @@ export default function Episode({ episode, transcript }) {
 export async function getStaticProps({ params }) {
   let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253');
   let episode = feed.items
+    .filter((item) => item.itunes_episodeType !== 'trailer')
     .map(
-      ({ id, title, description, content, enclosures, published }, index) => {
-        const episodeNumber = feed.items.length - 1;
+      (
+        { id, title, description, content, enclosures, published },
+        index,
+        items
+      ) => {
+        const episodeNumber = items.length - index;
         const episodeSlug = dasherize(title);
 
         return {

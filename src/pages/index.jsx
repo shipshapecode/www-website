@@ -137,8 +137,9 @@ export async function getStaticProps() {
 
   return {
     props: {
-      episodes: feed.items.map(
-        ({ id, title, description, enclosures, published }) => ({
+      episodes: feed.items
+        .filter((item) => item.itunes_episodeType !== 'trailer')
+        .map(({ id, title, description, enclosures, published }) => ({
           id,
           title: `${title}`,
           published,
@@ -147,8 +148,7 @@ export async function getStaticProps() {
             src: enclosure.url,
             type: enclosure.type,
           }))[0],
-        })
-      ),
+        })),
     },
     revalidate: 10,
   };
