@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-satoshi)'],
+        sans: ['var(--font-satoshi)', ...defaultTheme.fontFamily.sans],
       },
       spacing: {
         18: '4.5rem',
