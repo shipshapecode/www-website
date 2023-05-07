@@ -33,7 +33,7 @@ function EpisodeEntry({ episode }) {
 
   const audioPlayerData = useMemo(
     () => ({
-      title: episode.title,
+      title: `${episode.episodeNumber}: ${episode.title}`,
       audio: {
         src: episode.audio.src,
         type: episode.audio.type,
@@ -55,7 +55,10 @@ function EpisodeEntry({ episode }) {
             id={`episode-${episode.id}-title`}
             className="mt-2 text-lg font-bold text-slate-900"
           >
-            <Link href={episodeLink}>{episode.title}</Link>
+            <Link href={episodeLink}>
+              {`${episode.episodeNumber}: `}
+              {episode.title}
+            </Link>
           </h2>
           <FormattedDate
             date={date}
@@ -139,16 +142,23 @@ export async function getStaticProps() {
     props: {
       episodes: feed.items
         .filter((item) => item.itunes_episodeType !== 'trailer')
-        .map(({ id, title, description, enclosures, published }) => ({
-          id,
-          title: `${title}`,
-          published,
-          description: truncate(description, 275),
-          audio: enclosures.map((enclosure) => ({
-            src: enclosure.url,
-            type: enclosure.type,
-          }))[0],
-        })),
+        .map(
+          ({ id, title, description, enclosures, published }, index, items) => {
+            const episodeNumber = items.length - index;
+
+            return {
+              id,
+              title: `${title}`,
+              published,
+              description: truncate(description, 275),
+              episodeNumber,
+              audio: enclosures.map((enclosure) => ({
+                src: enclosure.url,
+                type: enclosure.type,
+              }))[0],
+            };
+          }
+        ),
     },
     revalidate: 10,
   };

@@ -22,7 +22,7 @@ export default function Episode({ episode, transcript }) {
 
   let audioPlayerData = useMemo(
     () => ({
-      title: episode.title,
+      title: `${episode.episodeNumber}: ${episode.title}`,
       audio: {
         src: episode.audio.src,
         type: episode.audio.type,
@@ -50,6 +50,7 @@ export default function Episode({ episode, transcript }) {
               <PlayButton player={player} size="large" />
               <div className="flex flex-col">
                 <h1 className="mt-2 text-4xl font-bold text-slate-900">
+                  {`${episode.episodeNumber}: `}
                   {episode.title}
                 </h1>
 
@@ -147,7 +148,7 @@ export async function getStaticProps({ params }) {
     const transcriptsDirectory = path.join(process.cwd(), 'transcripts');
     const transcriptPath = path.join(
       transcriptsDirectory,
-      `/${episode.episodeSlug}.md`
+      `/${episode.episodeNumber}.md`
     );
     const transcriptRaw = fs.readFileSync(transcriptPath, 'utf8');
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const playbackRates = [1, 1.2, 1.5];
+const playbackRates = [1, 1.2, 1.5, 2];
 
 export function PlaybackRateButton({ player }) {
   let [playbackRate, setPlaybackRate] = useState(playbackRates[0]);
