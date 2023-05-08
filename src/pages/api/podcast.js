@@ -1,7 +1,7 @@
 import Cors from 'cors';
 
 const headers = new Headers({
-  Authorization: 'Token token="5596a4249c004ae62d6ba7d56b02465c"',
+  Authorization: `Token token="${process.env.MEGAPHONE_TOKEN}"`,
   'Content-Type': 'application/json',
 });
 
