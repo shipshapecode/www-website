@@ -143,15 +143,20 @@ export async function getStaticProps() {
       episodes: feed.items
         .filter((item) => item.itunes_episodeType !== 'trailer')
         .map(
-          ({ id, title, description, enclosures, published }, index, items) => {
-            const episodeNumber = items.length - index;
-
+          ({
+            id,
+            title,
+            description,
+            enclosures,
+            published,
+            itunes_episode,
+          }) => {
             return {
               id,
               title: `${title}`,
               published,
               description: truncate(description, 275),
-              episodeNumber,
+              episodeNumber: itunes_episode,
               audio: enclosures.map((enclosure) => ({
                 src: enclosure.url,
                 type: enclosure.type,

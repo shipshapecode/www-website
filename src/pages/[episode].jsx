@@ -112,12 +112,15 @@ export async function getStaticProps({ params }) {
   let episode = feed.items
     .filter((item) => item.itunes_episodeType !== 'trailer')
     .map(
-      (
-        { id, title, description, content, enclosures, published },
-        index,
-        items
-      ) => {
-        const episodeNumber = items.length - index;
+      ({
+        id,
+        title,
+        description,
+        content,
+        enclosures,
+        published,
+        itunes_episode,
+      }) => {
         const episodeSlug = dasherize(title);
 
         return {
@@ -125,7 +128,7 @@ export async function getStaticProps({ params }) {
           title: `${title}`,
           description,
           content,
-          episodeNumber,
+          episodeNumber: itunes_episode,
           episodeSlug,
           published,
           audio: enclosures.map((enclosure) => ({
