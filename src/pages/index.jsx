@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { fetchEpisodes } from '@/pages/api/podcast';
+import { fetchEpisodes } from '@/pages/api/episodes/[page]';
 import { useAudioPlayer } from '@/components/AudioProvider';
 import { Container } from '@/components/Container';
 import { FormattedDate } from '@/components/FormattedDate';
@@ -117,7 +117,7 @@ export default function Home({ episodes }) {
     'shows and everything in-between.';
 
   async function fetchMoreEpisodes() {
-    const episodeResponse = await fetch('/api/podcast');
+    const episodeResponse = await fetch(`/api/episodes/${page}`);
     const moreEpisodes = await episodeResponse.json();
 
     setRecentEpisodes([...recentEpisodes, ...moreEpisodes]);
