@@ -2,7 +2,6 @@ import { NextIntlProvider } from 'next-intl';
 import localFont from 'next/font/local';
 
 import { Analytics } from '@vercel/analytics/react';
-import 'focus-visible';
 
 import { AudioProvider } from '@/components/AudioProvider';
 import { Layout } from '@/components/Layout';
