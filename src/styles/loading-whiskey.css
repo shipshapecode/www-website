@@ -1,0 +1,50 @@
+.whiskey-loader {
+  &:before,
+  &:after {
+    @apply absolute bg-slate-200 h-4 left-9 rounded-sm w-4 top-7;
+    animation: cube-float 2s linear infinite;
+    content: '';
+    will-change: transform;
+    z-index: -1;
+  }
+
+  &:after {
+    animation-name: cube-float--alt;
+    animation-duration: 3s;
+    top: 34px;
+    left: 16px;
+    transform: rotate(30deg);
+  }
+}
+
+@keyframes cube-float {
+  0% {
+    animation-timing-function: ease-in;
+    transform: none;
+  }
+
+  25% {
+    transform: rotate(-5deg) translate3d(-1px, 2px, 0);
+  }
+
+  50% {
+    animation-timing-function: ease-in-out;
+    transform: rotate(0deg) translate3d(-1px, 6px, 0);
+  }
+
+  80% {
+    transform: rotate(5deg) translate3d(0, 2px, 0);
+  }
+
+  100% {
+    animation-timing-function: ease-in;
+    transform: none;
+  }
+}
+
+@keyframes cube-float--alt {
+  50% {
+    animation-timing-function: ease;
+    transform: rotate(20deg) translate3d(-2px, -4px, 0);
+  }
+}

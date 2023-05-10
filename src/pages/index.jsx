@@ -1,15 +1,57 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { parse } from 'rss-to-json';
+import clsx from 'clsx';
 
+import { fetchEpisodes } from '@/pages/api/episodes/[page]';
 import { useAudioPlayer } from '@/components/AudioProvider';
 import { Container } from '@/components/Container';
 import { FormattedDate } from '@/components/FormattedDate';
 import { dasherize } from '@/utils/dasherize';
-import { truncate } from '@/utils/truncate';
+
+function LoadingIcon({ ...props }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 65 65"
+      height="65px"
+      width="65px"
+      {...props}
+    >
+      <path
+        className="fill-current"
+        d="M58.4,8.3c-0.6-2.2-1.7-4.1-8.4-5.5c-4.8-1-17.5-3.5-35.2-0.1C9.6,3.7,7,5.6,6.9,7.6c-0.3,1.8-5.8,32-4,40.2
+	C5.3,58.5,15.3,64,32.7,64c17.6,0,26.9-5.6,29.3-16.6C63.9,39.2,58.9,10.2,58.4,8.3 M32.4,3.1c15.3,0,23.6,3.1,23.6,4.6
+	c0,1.6-8.3,4.6-23.6,4.6S8.9,9.3,8.9,7.8C8.9,6.2,17.2,3.1,32.4,3.1 M60,47.4C57.7,57.4,49.4,62,32.7,62C16.4,62,7.1,57,4.9,47.4
+	c-1.5-6.7,2.3-29.6,3.6-37c1.3,0.9,3.4,1.7,6.4,2.4c4.7,1.1,11,1.7,17.6,1.7s12.9-0.6,17.6-1.7c3-0.7,5.1-1.5,6.4-2.4
+	C57.7,17.7,61.5,40.8,60,47.4"
+      />
+      <path
+        fill="#992709"
+        fillOpacity="0.7"
+        d="M5.4,31.3C4.6,38,4.2,44.4,4.9,47.4C7.1,57,16.4,62,32.7,62c16.7,0,25.1-4.5,27.3-14.6
+	c0.7-3,0.3-9.5-0.5-16.3c-6,2-16.7,5-27.3,5C21.9,36.1,11.5,33.3,5.4,31.3z"
+      >
+        <animate
+          attributeName="d"
+          calcMode="spline"
+          keySplines="0.45 0.03 0.5 0.95; 0.45 0.03 0.5 0.95"
+          values="
+                       M5.4,31.3C4.6,38,4.2,44.4,4.9,47.4C7.1,57,16.4,62,32.7,62c16.7,0,25.1-4.5,27.3-14.6
+	c0.7-3,0.3-9.5-0.5-16.3c-6,2-16.7,5-27.3,5C21.9,36.1,11.5,33.3,5.4,31.3z; 
+                       M5.1,34.6c-0.8,6.8-0.8,9.8-0.2,12.8C7.1,57,16.4,62,32.7,62c16.7,0,25.1-4.5,27.3-14.6
+	c0.7-3,0.6-6.1-0.2-12.9c-6,2-17,4.3-27.7,4.3C21.9,38.8,11.2,36.6,5.1,34.6z;
+                       M5.4,31.3C4.6,38,4.2,44.4,4.9,47.4C7.1,57,16.4,62,32.7,62c16.7,0,25.1-4.5,27.3-14.6
+	c0.7-3,0.3-9.5-0.5-16.3c-6,2-16.7,5-27.3,5C21.9,36.1,11.5,33.3,5.4,31.3z"
+          dur="3s"
+          repeatCount="indefinite"
+        />
+      </path>
+    </svg>
+  );
+}
 
 function PlayPauseIcon({ playing, ...props }) {
   return (
@@ -29,6 +71,7 @@ function PlayPauseIcon({ playing, ...props }) {
 
 function EpisodeEntry({ episode }) {
   const date = new Date(episode.published);
+
   const episodeLink = `/${dasherize(episode.title)}`;
 
   const audioPlayerData = useMemo(
@@ -47,6 +90,7 @@ function EpisodeEntry({ episode }) {
   return (
     <article
       aria-labelledby={`episode-${episode.id}-title`}
+      key={`episode-${episode.id}-title`}
       className="py-10 sm:py-12"
     >
       <Container>
@@ -105,11 +149,59 @@ function EpisodeEntry({ episode }) {
 }
 
 export default function Home({ episodes }) {
+  const [recentEpisodes, setRecentEpisodes] = useState(episodes);
+  const [canLoadMore, setCanLoadMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  // starting from page 2 due to static props fetch of page 1
+  const [page, setPage] = useState(2);
+
   const description =
     'Veteran web developers, and whiskey connoisseurs, RobbieTheWagner and ' +
     'Charles William Carpenter III host this informal web development podcast ' +
     'covering a wide array of topics including TypeScript, Tailwind, tractors, TV ' +
     'shows and everything in-between.';
+
+  async function fetchMoreEpisodes() {
+    if (canLoadMore) {
+      setIsLoading(true);
+
+      const episodeResponse = await fetch(`/api/episodes/${page}`);
+      const { canLoadMore, episodes } = await episodeResponse.json();
+
+      setIsLoading(false);
+      setCanLoadMore(canLoadMore);
+
+      setRecentEpisodes([...recentEpisodes, ...episodes]);
+      setPage(page + 1);
+    }
+  }
+
+  useEffect(() => {
+    const debounce = (callback, wait) => {
+      let timeoutId = null;
+      return (...args) => {
+        window.clearTimeout(timeoutId);
+        timeoutId = window.setTimeout(() => {
+          callback.apply(null, args);
+        }, wait);
+      };
+    };
+    const handleScroll = debounce((ev) => {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 500
+      ) {
+        fetchMoreEpisodes();
+      }
+    }, 250);
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  });
+
   return (
     <>
       <Head>
@@ -126,9 +218,20 @@ export default function Home({ episodes }) {
           </h1>
         </Container>
         <div className="divide-y divide-slate-100 sm:mt-4 lg:mt-8 lg:border-t lg:border-slate-100">
-          {episodes.map((episode) => (
+          {recentEpisodes.map((episode) => (
             <EpisodeEntry key={episode.id} episode={episode} />
           ))}
+        </div>
+
+        <div
+          className={clsx(
+            'flex justify-center text-slate-100',
+            !isLoading && 'hidden'
+          )}
+        >
+          <div className="whiskey-loader relative ">
+            <LoadingIcon />
+          </div>
         </div>
       </div>
     </>
@@ -136,34 +239,11 @@ export default function Home({ episodes }) {
 }
 
 export async function getStaticProps() {
-  let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253');
+  const { episodes } = await fetchEpisodes();
 
   return {
     props: {
-      episodes: feed.items
-        .filter((item) => item.itunes_episodeType !== 'trailer')
-        .map(
-          ({
-            id,
-            title,
-            description,
-            enclosures,
-            published,
-            itunes_episode,
-          }) => {
-            return {
-              id,
-              title: `${title}`,
-              published,
-              description: truncate(description, 275),
-              episodeNumber: itunes_episode,
-              audio: enclosures.map((enclosure) => ({
-                src: enclosure.url,
-                type: enclosure.type,
-              }))[0],
-            };
-          }
-        ),
+      episodes,
     },
     revalidate: 10,
   };

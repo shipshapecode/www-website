@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { AudioProvider } from '@/components/AudioProvider';
 import { Layout } from '@/components/Layout';
 import '@/styles/tailwind.css';
+import '@/styles/loading-whiskey.css';
 
 const satoshi = localFont({
   src: './Satoshi-Variable.woff2',
