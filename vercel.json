@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/cron/rebuild",
-      "schedule": "0 1 * * 4"
+      "schedule": "0 4 * * 4"
     }
   ]
 }
