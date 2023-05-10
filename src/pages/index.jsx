@@ -150,6 +150,7 @@ function EpisodeEntry({ episode }) {
 
 export default function Home({ episodes }) {
   const [recentEpisodes, setRecentEpisodes] = useState(episodes);
+  const [canLoadMore, setCanLoadMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   // starting from page 2 due to static props fetch of page 1
   const [page, setPage] = useState(2);
@@ -161,15 +162,18 @@ export default function Home({ episodes }) {
     'shows and everything in-between.';
 
   async function fetchMoreEpisodes() {
-    setIsLoading(true);
+    if (canLoadMore) {
+      setIsLoading(true);
 
-    const episodeResponse = await fetch(`/api/episodes/${page}`);
-    const moreEpisodes = await episodeResponse.json();
+      const episodeResponse = await fetch(`/api/episodes/${page}`);
+      const { canLoadMore, episodes } = await episodeResponse.json();
 
-    setIsLoading(false);
+      setIsLoading(false);
+      setCanLoadMore(canLoadMore);
 
-    setRecentEpisodes([...recentEpisodes, ...moreEpisodes]);
-    setPage(page + 1);
+      setRecentEpisodes([...recentEpisodes, ...episodes]);
+      setPage(page + 1);
+    }
   }
 
   useEffect(() => {
@@ -235,7 +239,7 @@ export default function Home({ episodes }) {
 }
 
 export async function getStaticProps() {
-  const episodes = await fetchEpisodes();
+  const { episodes } = await fetchEpisodes();
 
   return {
     props: {
