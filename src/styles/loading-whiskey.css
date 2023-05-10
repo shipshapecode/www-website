@@ -1,15 +1,9 @@
 .whiskey-loader {
   &:before,
   &:after {
+    @apply absolute bg-slate-200 h-4 left-9 rounded-sm w-4 top-7;
     animation: cube-float 2s linear infinite;
-    background-color: rgba(209, 219, 227, 0.716);
-    border-radius: 2px;
     content: '';
-    height: 17px;
-    width: 17px;
-    position: absolute;
-    top: 28px;
-    left: 35px;
     will-change: transform;
     z-index: -1;
   }

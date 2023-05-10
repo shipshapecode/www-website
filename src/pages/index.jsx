@@ -30,7 +30,7 @@ function LoadingIcon({ ...props }) {
       />
       <path
         fill="#992709"
-        fill-opacity="0.75"
+        fillOpacity="0.7"
         d="M5.4,31.3C4.6,38,4.2,44.4,4.9,47.4C7.1,57,16.4,62,32.7,62c16.7,0,25.1-4.5,27.3-14.6
 	c0.7-3,0.3-9.5-0.5-16.3c-6,2-16.7,5-27.3,5C21.9,36.1,11.5,33.3,5.4,31.3z"
       >
@@ -221,7 +221,7 @@ export default function Home({ episodes }) {
 
         <div
           className={clsx(
-            'flex justify-center text-slate-500',
+            'flex justify-center text-slate-100',
             !isLoading && 'hidden'
           )}
         >
