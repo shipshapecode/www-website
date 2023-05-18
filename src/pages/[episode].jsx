@@ -169,7 +169,7 @@ export async function getStaticProps({ params }) {
       episode,
       transcript,
     },
-    revalidate: 10,
+    revalidate: 10800,
   };
 }
 

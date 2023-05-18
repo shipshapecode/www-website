@@ -15,6 +15,13 @@ const nextConfig = withBundleAnalyzer({
         destination: '/hot-takes-tanstack-and-open-source-with-tanner-linsley',
         permanent: true,
       },
+      {
+        source:
+          '/creating-code-pen-tackling-tailwind-and-keeping-it-simple-with-chris-coyier',
+        destination:
+          'creating-codepen-tackling-tailwind-and-keeping-it-simple-with-chris-coyier',
+        permanent: true,
+      },
     ];
   },
   webpack: (config) => {
