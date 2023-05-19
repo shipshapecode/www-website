@@ -255,7 +255,7 @@ export function Layout({ children }) {
                 [
                   'RSS Feed',
                   RSSIcon,
-                  'https://feeds.megaphone.fm/PODRYL5396410253',
+                  'https://feeds.zencastr.com/f/FnC5NJA5.rss',
                 ],
               ].map(([label, Icon, link]) => (
                 <li key={label} className="flex">

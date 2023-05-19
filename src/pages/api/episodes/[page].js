@@ -9,17 +9,24 @@ function paginate(array, pageSize, pageNumber) {
 
 export async function fetchEpisodes(page = 1) {
   const episodesPerPage = 15;
-  const feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253');
+  const feed = await parse('https://feeds.zencastr.com/f/FnC5NJA5.rss');
 
   const allEpisodes = feed.items
     .filter((item) => item.itunes_episodeType !== 'trailer')
     .map(
-      ({ id, title, description, enclosures, published, itunes_episode }) => {
+      ({
+        id,
+        title,
+        enclosures,
+        published,
+        itunes_episode,
+        itunes_summary,
+      }) => {
         return {
           id,
           title: `${title}`,
           published,
-          description: truncate(description, 275),
+          description: truncate(itunes_summary, 260),
           episodeNumber: itunes_episode,
           audio: enclosures.map((enclosure) => ({
             src: enclosure.url,

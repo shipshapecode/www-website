@@ -14,7 +14,6 @@ import { Container } from '@/components/Container';
 import { FormattedDate } from '@/components/FormattedDate';
 import { PlayButton } from '@/components/player/PlayButton';
 import { dasherize } from '@/utils/dasherize';
-import { truncate } from '@/utils/truncate';
 
 export default function Episode({ episode, transcript }) {
   let [isExpanded, setIsExpanded] = useState(false);
@@ -37,7 +36,7 @@ export default function Episode({ episode, transcript }) {
     <>
       <Head>
         <title>{`${episode.title} - Whiskey Web and Whatnot - Episode ${episode.episodeNumber}`}</title>
-        <meta name="description" content={truncate(episode.description, 260)} />
+        <meta name="description" content={episode.description} />
         <meta property="og:site_name" content="Whiskey Web and Whatnot" />
         <meta property="og:audio" content={episode.audio.src} />
         <meta property="og:audio:secure_url" content={episode.audio.src} />
@@ -108,7 +107,7 @@ export default function Episode({ episode, transcript }) {
 }
 
 export async function getStaticProps({ params }) {
-  let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253');
+  let feed = await parse('https://feeds.zencastr.com/f/FnC5NJA5.rss');
   let episode = feed.items
     .filter((item) => item.itunes_episodeType !== 'trailer')
     .map(
@@ -174,7 +173,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  let feed = await parse('https://feeds.megaphone.fm/PODRYL5396410253');
+  let feed = await parse('https://feeds.zencastr.com/f/FnC5NJA5.rss');
 
   return {
     paths: feed.items.map(({ id }) => ({
