@@ -14,6 +14,7 @@ import { Container } from '@/components/Container';
 import { FormattedDate } from '@/components/FormattedDate';
 import { PlayButton } from '@/components/player/PlayButton';
 import { dasherize } from '@/utils/dasherize';
+import { truncate } from '@/utils/truncate';
 
 export default function Episode({ episode, transcript }) {
   let [isExpanded, setIsExpanded] = useState(false);
@@ -107,7 +108,7 @@ export default function Episode({ episode, transcript }) {
 }
 
 export async function getStaticProps({ params }) {
-  let feed = await parse('https://feeds.zencastr.com/f/FnC5NJA5.rss');
+  let feed = await parse('https://anchor.fm/s/e329dea0/podcast/rss');
   let episode = feed.items
     .filter((item) => item.itunes_episodeType !== 'trailer')
     .map(
@@ -115,18 +116,18 @@ export async function getStaticProps({ params }) {
         id,
         title,
         description,
-        content,
         enclosures,
         published,
         itunes_episode,
+        itunes_summary,
       }) => {
         const episodeSlug = dasherize(title);
 
         return {
           id: id.toString(),
           title: `${title}`,
-          description,
-          content,
+          description: truncate(description, 260),
+          content: description,
           episodeNumber: itunes_episode,
           episodeSlug,
           published,
@@ -173,7 +174,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  let feed = await parse('https://feeds.zencastr.com/f/FnC5NJA5.rss');
+  let feed = await parse('https://anchor.fm/s/e329dea0/podcast/rss');
 
   return {
     paths: feed.items.map(({ id }) => ({
