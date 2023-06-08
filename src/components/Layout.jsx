@@ -97,6 +97,20 @@ function SpotifyIcon(props) {
   );
 }
 
+function YouTubeIcon(props) {
+  return (
+    <svg
+      aria-hidden="true"
+      height="32"
+      viewBox="0 0 461.001 461.001"
+      width="32"
+      {...props}
+    >
+      <path d="m365.257 67.393h-269.513c-52.878 0-95.744 42.866-95.744 95.744v134.728c0 52.878 42.866 95.744 95.744 95.744h269.513c52.878 0 95.744-42.866 95.744-95.744v-134.728c0-52.878-42.866-95.744-95.744-95.744zm-64.751 169.663-126.06 60.123c-3.359 1.602-7.239-.847-7.239-4.568v-124.004c0-3.774 3.982-6.22 7.348-4.514l126.06 63.881c3.748 1.899 3.683 7.274-.109 9.082z" />
+    </svg>
+  );
+}
+
 function ApplePodcastIcon(props) {
   return (
     <svg aria-hidden="true" viewBox="0 0 32 32" {...props}>
@@ -229,7 +243,7 @@ export function Layout({ children }) {
                 colors={['fill-indigo-300', 'fill-blue-300']}
                 className="h-2.5 w-2.5"
               />
-              <span className="ml-2.5">Listen</span>
+              <span className="ml-2.5">Listen/Watch</span>
             </h2>
             <div className="h-px bg-gradient-to-r from-slate-200/0 via-slate-200 to-slate-200/0 lg:hidden" />
             <ul
@@ -237,6 +251,11 @@ export function Layout({ children }) {
               className="mt-4 flex justify-center gap-10 text-base font-medium leading-7 text-slate-700 sm:gap-8 lg:flex-col lg:gap-4"
             >
               {[
+                [
+                  'YouTube',
+                  YouTubeIcon,
+                  'https://www.youtube.com/@WhiskeyWebAndWhatnot/',
+                ],
                 [
                   'Spotify',
                   SpotifyIcon,
@@ -247,6 +266,7 @@ export function Layout({ children }) {
                   ApplePodcastIcon,
                   'https://podcasts.apple.com/us/podcast/whiskey-web-and-whatnot/id1552776603?uo=4?mt=2&ls=1',
                 ],
+
                 [
                   'Overcast',
                   OvercastIcon,
