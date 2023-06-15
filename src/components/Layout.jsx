@@ -262,7 +262,7 @@ export function Layout({ children }) {
                   'https://open.spotify.com/show/19jiuHAqzeKnkleQUpZxDf',
                 ],
                 [
-                  'Apple Podcast',
+                  'Apple Podcasts',
                   ApplePodcastIcon,
                   'https://podcasts.apple.com/us/podcast/whiskey-web-and-whatnot/id1552776603?uo=4?mt=2&ls=1',
                 ],
