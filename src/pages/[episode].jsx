@@ -119,7 +119,7 @@ export async function getStaticProps({ params }) {
         enclosures,
         published,
         itunes_episode,
-        itunes_summary,
+        itunes_episodeType,
       }) => {
         const episodeSlug = dasherize(title);
 
@@ -128,7 +128,8 @@ export async function getStaticProps({ params }) {
           title: `${title}`,
           description: truncate(description, 260),
           content: description,
-          episodeNumber: itunes_episode,
+          episodeNumber:
+            itunes_episodeType === 'bonus' ? 'Bonus' : itunes_episode,
           episodeSlug,
           published,
           audio: enclosures.map((enclosure) => ({

@@ -11,17 +11,27 @@ export async function fetchEpisodes(page = 1) {
   const episodesPerPage = 15;
   const feed = await parse('https://anchor.fm/s/e329dea0/podcast/rss');
 
+  console.log(feed.items[0]);
   const allEpisodes = feed.items
     .filter((item) => item.itunes_episodeType !== 'trailer')
     .map(
-      ({ description, id, title, enclosures, published, itunes_episode }) => {
+      ({
+        description,
+        id,
+        title,
+        enclosures,
+        published,
+        itunes_episode,
+        itunes_episodeType,
+      }) => {
         return {
           id,
           title: `${title}`,
           published,
           content: description,
           description: truncate(description, 260),
-          episodeNumber: itunes_episode,
+          episodeNumber:
+            itunes_episodeType === 'bonus' ? 'Bonus' : itunes_episode,
           audio: enclosures.map((enclosure) => ({
             src: enclosure.url,
             type: enclosure.type,
