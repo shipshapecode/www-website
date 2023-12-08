@@ -11,7 +11,6 @@ export async function fetchEpisodes(page = 1) {
   const episodesPerPage = 15;
   const feed = await parse('https://anchor.fm/s/e329dea0/podcast/rss');
 
-  console.log(feed.items[0]);
   const allEpisodes = feed.items
     .filter((item) => item.itunes_episodeType !== 'trailer')
     .map(
