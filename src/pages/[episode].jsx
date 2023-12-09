@@ -38,6 +38,18 @@ export default function Episode({ episode, transcript }) {
       <Head>
         <title>{`${episode.title} - Whiskey Web and Whatnot - Episode ${episode.episodeNumber}`}</title>
         <meta name="description" content={episode.description} />
+
+        {episode.episodeImage && (
+          <>
+            <meta content={episode.episodeImage} name="og:image"></meta>
+            <meta
+              content={episode.episodeImage}
+              name="twitter:image:src"
+            ></meta>
+            <meta content="summary_large_image" name="twitter:card" />
+          </>
+        )}
+
         <meta property="og:site_name" content="Whiskey Web and Whatnot" />
         <meta property="og:audio" content={episode.audio.src} />
         <meta property="og:audio:secure_url" content={episode.audio.src} />
@@ -133,6 +145,7 @@ export async function getStaticProps({ params }) {
         published,
         itunes_episode,
         itunes_episodeType,
+        itunes_image,
       }) => {
         const episodeNumber =
           itunes_episodeType === 'bonus' ? 'Bonus' : itunes_episode;
@@ -143,6 +156,7 @@ export async function getStaticProps({ params }) {
           title: `${title}`,
           description: truncate(description, 260),
           content: description,
+          episodeImage: itunes_image?.href,
           episodeNumber,
           episodeSlug,
           published,
