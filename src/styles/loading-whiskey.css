@@ -1,7 +1,7 @@
 .whiskey-loader {
   &:before,
   &:after {
-    @apply absolute bg-slate-200 h-4 left-9 rounded-sm w-4 top-7;
+    @apply absolute left-9 top-7 h-4 w-4 rounded-sm bg-slate-200;
     animation: cube-float 2s linear infinite;
     content: '';
     will-change: transform;

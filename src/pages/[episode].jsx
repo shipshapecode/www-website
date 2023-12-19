@@ -94,7 +94,7 @@ export default function Episode({ episode, transcript }) {
 
             {transcript && (
               <div
-                className="bg-blue-100 border-t border-b border-blue-500 text-blue-700 mb-2 px-4 py-3"
+                className="mb-2 border-b border-t border-blue-500 bg-blue-100 px-4 py-3 text-blue-700"
                 role="alert"
               >
                 <p className="font-bold">Note</p>

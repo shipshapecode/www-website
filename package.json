@@ -22,20 +22,20 @@
     "@next/bundle-analyzer": "^13.4.6",
     "@tailwindcss/typography": "^0.5.10",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/react": "^18.2.13",
+    "@types/react": "^18.2.45",
     "autoprefixer": "^10.4.16",
-    "clsx": "^1.2.1",
-    "eslint": "^8.43.0",
+    "clsx": "^2.0.0",
+    "eslint": "^8.56.0",
     "eslint-config-next": "^13.4.6",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.9",
     "raw-loader": "^4.0.2",
-    "remark": "^14.0.3",
-    "remark-html": "^15.0.2",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
     "rss-to-json": "^2.1.1",
-    "sharp": "^0.32.1",
-    "tailwindcss": "^3.3.2"
+    "sharp": "^0.33.1",
+    "tailwindcss": "^3.3.7"
   }
 }
