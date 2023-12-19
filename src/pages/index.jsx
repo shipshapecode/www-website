@@ -5,10 +5,10 @@ import Link from 'next/link';
 
 import clsx from 'clsx';
 
-import { fetchEpisodes } from '@/pages/api/episodes/[page]';
 import { useAudioPlayer } from '@/components/AudioProvider';
 import { Container } from '@/components/Container';
 import { FormattedDate } from '@/components/FormattedDate';
+import { fetchEpisodes } from '@/pages/api/episodes/[page]';
 import { dasherize } from '@/utils/dasherize';
 
 function LoadingIcon({ ...props }) {
@@ -83,7 +83,7 @@ function EpisodeEntry({ episode }) {
       },
       link: `/${episode.id}`,
     }),
-    [episode]
+    [episode],
   );
   const player = useAudioPlayer(audioPlayerData);
 
@@ -226,7 +226,7 @@ export default function Home({ episodes }) {
         <div
           className={clsx(
             'flex justify-center text-slate-100',
-            !isLoading && 'hidden'
+            !isLoading && 'hidden',
           )}
         >
           <div className="whiskey-loader relative ">

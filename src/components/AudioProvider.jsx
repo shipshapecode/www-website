@@ -126,6 +126,6 @@ export function useAudioPlayer(data) {
         return player.isPlaying(data);
       },
     }),
-    [player, data]
+    [player, data],
   );
 }

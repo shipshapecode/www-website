@@ -11,7 +11,7 @@ module.exports = {
   singleQuote: true,
   plugins: [
     // This plugin is incompatible with the Tailwind one, so disabling for now.
-    // require('@trivago/prettier-plugin-sort-imports'),
+    require('@trivago/prettier-plugin-sort-imports'),
     // require('prettier-plugin-tailwindcss'),
   ],
 };
