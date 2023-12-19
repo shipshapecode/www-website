@@ -1,4 +1,4 @@
-import { NextIntlProvider } from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
 import localFont from 'next/font/local';
 
 import { Analytics } from '@vercel/analytics/react';
@@ -14,7 +14,7 @@ const satoshi = localFont({
 
 export default function App({ Component, pageProps }) {
   return (
-    <NextIntlProvider locale="en-US" timeZone="America/New_York">
+    <NextIntlClientProvider locale="en-US" timeZone="America/New_York">
       <AudioProvider>
         <Layout>
           <style jsx global>
@@ -28,6 +28,6 @@ export default function App({ Component, pageProps }) {
           <Analytics />
         </Layout>
       </AudioProvider>
-    </NextIntlProvider>
+    </NextIntlClientProvider>
   );
 }
