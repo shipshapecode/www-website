@@ -51,6 +51,7 @@ export default function Episode({ episode, transcript }) {
         {episode.episodeImage && (
           <>
             <meta content={episode.episodeImage} name="og:image" />
+            <meta content="summary_large_image" name="twitter:card" />
             <meta content={episode.episodeImage} name="twitter:image:src" />
           </>
         )}
