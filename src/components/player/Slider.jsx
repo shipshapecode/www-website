@@ -19,7 +19,7 @@ function parseTime(seconds) {
 
 function formatTime(seconds, totalSeconds = seconds) {
   let totalWithoutLeadingZeroes = totalSeconds.slice(
-    totalSeconds.findIndex((x) => x !== 0),
+    totalSeconds.findIndex((x) => x !== 0)
   );
   return seconds
     .slice(seconds.length - totalWithoutLeadingZeroes.length)
@@ -32,7 +32,7 @@ function Thumb(props) {
   let inputRef = useRef(null);
   let { thumbProps, inputProps } = useSliderThumb(
     { index, trackRef, inputRef },
-    state,
+    state
   );
 
   return (
@@ -56,7 +56,7 @@ function Thumb(props) {
           'h-4 rounded-full',
           isFocusVisible || state.isThumbDragging(index)
             ? 'w-1.5 bg-slate-900'
-            : 'w-1 bg-slate-700',
+            : 'w-1 bg-slate-700'
         )}
       >
         <VisuallyHidden>
@@ -73,7 +73,7 @@ export function Slider(props) {
   let { groupProps, trackProps, labelProps, outputProps } = useSlider(
     props,
     state,
-    trackRef,
+    trackRef
   );
   let { focusProps, isFocusVisible } = useFocusRing();
 
@@ -108,7 +108,7 @@ export function Slider(props) {
             'h-2 md:rounded-l-xl md:rounded-r-md',
             isFocusVisible || state.isThumbDragging(0)
               ? 'bg-slate-900'
-              : 'bg-slate-700',
+              : 'bg-slate-700'
           )}
           style={{
             width:
@@ -139,7 +139,7 @@ export function Slider(props) {
             state.getThumbMaxValue(0) === 0 && 'opacity-0',
             isFocusVisible || state.isThumbDragging(0)
               ? 'bg-slate-100 text-slate-900'
-              : 'text-slate-500',
+              : 'text-slate-500'
           )}
         >
           {formatTime(currentTime, totalTime)}
@@ -150,7 +150,7 @@ export function Slider(props) {
         <span
           className={clsx(
             'hidden rounded-md px-1 py-0.5 font-mono text-sm leading-6 text-slate-500 md:block',
-            state.getThumbMaxValue(0) === 0 && 'opacity-0',
+            state.getThumbMaxValue(0) === 0 && 'opacity-0'
           )}
         >
           {formatTime(totalTime)}

@@ -28,7 +28,7 @@ function Waveform(props) {
 
   let barHeights = Array.from(
     { length: bars.total },
-    randomBetween(bars.minHeight, bars.maxHeight),
+    randomBetween(bars.minHeight, bars.maxHeight)
   );
 
   return (
@@ -166,7 +166,7 @@ function AboutSection(props) {
       <p
         className={clsx(
           'mt-2 text-base leading-7 text-slate-700',
-          !isExpanded && 'lg:line-clamp-4',
+          !isExpanded && 'lg:line-clamp-4'
         )}
       >
         Whiskey Web and Whatnot is an informal, whiskey fueled fireside chat

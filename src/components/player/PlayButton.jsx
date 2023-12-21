@@ -30,7 +30,7 @@ export function PlayButton({ player, size = 'large' }) {
           large: 'h-18 w-18 focus:ring focus:ring-offset-4',
           medium: 'h-14 w-14 focus:ring-2 focus:ring-offset-2',
           small: 'h-10 w-10 focus:ring-2 focus:ring-offset-2',
-        }[size],
+        }[size]
       )}
       onClick={player.toggle}
       aria-label={player.playing ? 'Pause' : 'Play'}
@@ -44,7 +44,7 @@ export function PlayButton({ player, size = 'large' }) {
               large: 'h-7 w-7',
               medium: 'h-5 w-5',
               small: 'h-4 w-4',
-            }[size],
+            }[size]
           )}
         />
       ) : (
@@ -55,7 +55,7 @@ export function PlayButton({ player, size = 'large' }) {
               large: 'h-9 w-9',
               medium: 'h-7 w-7',
               small: 'h-5 w-5',
-            }[size],
+            }[size]
           )}
         />
       )}
