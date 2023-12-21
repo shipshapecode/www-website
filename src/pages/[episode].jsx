@@ -44,9 +44,9 @@ export default function Episode({ episode, transcript }) {
         <meta content={episode.description} name="twitter:description" />
         <meta content={title} name="og:title" />
         <meta content={title} name="twitter:title" />
-        <meta content="player" name="twitter:card" />
+        {/* <meta content="player" name="twitter:card" />
         <meta content={episode.audio.src} name="twitter:player:stream" />
-        <meta name="twitter:player:stream:content_type" content="audio/mpeg" />
+        <meta name="twitter:player:stream:content_type" content="audio/mpeg" /> */}
 
         {episode.episodeImage && (
           <>
