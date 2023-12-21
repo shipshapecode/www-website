@@ -8,7 +8,11 @@ export default function Document() {
       <Head>
         <meta content={imageURL} name="og:image" key="ogImage" />
         <meta content={imageURL} name="twitter:image:src" key="twitterImage" />
-        <meta content="summary_large_image" name="twitter:card" key="twitterCard" />
+        <meta
+          content="summary_large_image"
+          name="twitter:card"
+          key="twitterCard"
+        />
       </Head>
       <body>
         <Main />
