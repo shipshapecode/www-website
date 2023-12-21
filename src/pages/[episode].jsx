@@ -39,14 +39,23 @@ export default function Episode({ episode, transcript }) {
     <>
       <Head>
         <title>{title}</title>
-        <meta content={episode.description} name="description" />
-        <meta content={episode.description} name="og:description" />
-        <meta content={episode.description} name="twitter:description" />
-        <meta content={title} name="og:title" />
-        <meta content={title} name="twitter:title" />
-        {/* <meta content="player" name="twitter:card" key="twitterCard" />
-        <meta content={episode.audio.src} name="twitter:player:stream" />
-        <meta name="twitter:player:stream:content_type" content="audio/mpeg" /> */}
+        <meta
+          content={episode.description}
+          name="description"
+          key="description"
+        />
+        <meta
+          content={episode.description}
+          name="og:description"
+          key="ogDescription"
+        />
+        <meta
+          content={episode.description}
+          name="twitter:description"
+          key="twitterDescription"
+        />
+        <meta content={title} name="og:title" key="ogTitle" />
+        <meta content={title} name="twitter:title" key="twitterTitle" />
 
         {episode.episodeImage && (
           <>
@@ -62,6 +71,10 @@ export default function Episode({ episode, transcript }) {
             />
           </>
         )}
+
+        {/* <meta content="player" name="twitter:card" key="twitterCard" />
+        <meta content={episode.audio.src} name="twitter:player:stream" />
+        <meta name="twitter:player:stream:content_type" content="audio/mpeg" /> */}
 
         <meta property="og:site_name" content="Whiskey Web and Whatnot" />
         <meta property="og:audio" content={episode.audio.src} />

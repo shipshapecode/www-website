@@ -209,7 +209,13 @@ export default function Home({ episodes }) {
           Whiskey Web and Whatnot - A whiskey fueled fireside chat with your
           favorite web developers.
         </title>
-        <meta name="description" content={description} />
+        <meta content={description} name="description" key="description" />
+        <meta content={description} name="og:description" key="ogDescription" />
+        <meta
+          content={description}
+          name="twitter:description"
+          key="twitterDescription"
+        />
       </Head>
       <div className="pb-12 pt-16 sm:pb-4 lg:pt-12">
         <Container>
