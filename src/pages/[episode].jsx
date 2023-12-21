@@ -29,24 +29,28 @@ export default function Episode({ episode, transcript }) {
       },
       link: `/${episode.id}`,
     }),
-    [episode],
+    [episode]
   );
   let player = useAudioPlayer(audioPlayerData);
+
+  const title = `${episode.title} - Whiskey Web and Whatnot - Episode ${episode.episodeNumber}`;
 
   return (
     <>
       <Head>
-        <title>{`${episode.title} - Whiskey Web and Whatnot - Episode ${episode.episodeNumber}`}</title>
-        <meta name="description" content={episode.description} />
+        <title>{title}</title>
+        <meta content={episode.description} name="description" />
+        <meta content={episode.description} name="og:description" />
+        <meta content={episode.description} name="twitter:description" />
+        <meta content={title} name="og:title" />
+        <meta content={title} name="twitter:title" />
+        <meta content="player" name="twitter:card" />
+        <meta content={episode.audio.src} name="twitter:player:stream" />
 
         {episode.episodeImage && (
           <>
-            <meta content={episode.episodeImage} name="og:image"></meta>
-            <meta
-              content={episode.episodeImage}
-              name="twitter:image:src"
-            ></meta>
-            <meta content="summary_large_image" name="twitter:card" />
+            <meta content={episode.episodeImage} name="og:image" />
+            <meta content={episode.episodeImage} name="twitter:image:src" />
           </>
         )}
 
@@ -108,7 +112,7 @@ export default function Episode({ episode, transcript }) {
             <article
               className={clsx(
                 "prose prose-slate [&>h2:nth-of-type(3n)]:before:bg-violet-200 [&>h2:nth-of-type(3n+2)]:before:bg-indigo-200 [&>h2]:mt-12 [&>h2]:flex [&>h2]:items-center [&>h2]:font-mono [&>h2]:text-sm [&>h2]:font-medium [&>h2]:leading-7 [&>h2]:text-slate-900 [&>h2]:before:mr-3 [&>h2]:before:h-3 [&>h2]:before:w-1.5 [&>h2]:before:rounded-r-full [&>h2]:before:bg-cyan-200 [&>ul]:mt-6 [&>ul]:list-['3'] [&>ul]:pl-5",
-                !isExpanded && 'lg:line-clamp-4',
+                !isExpanded && 'lg:line-clamp-4'
               )}
               dangerouslySetInnerHTML={{
                 __html:
@@ -165,7 +169,7 @@ export async function getStaticProps({ params }) {
             type: enclosure.type,
           }))[0],
         };
-      },
+      }
     )
     .find(({ episodeNumber, episodeSlug }) => {
       return (
@@ -185,7 +189,7 @@ export async function getStaticProps({ params }) {
     const transcriptsDirectory = path.join(process.cwd(), 'transcripts');
     const transcriptPath = path.join(
       transcriptsDirectory,
-      `/${episode.episodeNumber}.md`,
+      `/${episode.episodeNumber}.md`
     );
     const transcriptRaw = fs.readFileSync(transcriptPath, 'utf8');
 
