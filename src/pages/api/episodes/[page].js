@@ -36,7 +36,7 @@ export async function fetchEpisodes(page = 1) {
             type: enclosure.type,
           }))[0],
         };
-      }
+      },
     );
 
   const canLoadMore = page * episodesPerPage < allEpisodes.length;
