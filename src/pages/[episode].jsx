@@ -65,6 +65,11 @@ export default function Episode({ episode, transcript }) {
               key="ogImage"
             />
             <meta
+              content="summary_large_image"
+              name="twitter:card"
+              key="twitterCard"
+            />
+            <meta
               content={episode.episodeImage}
               name="twitter:image:src"
               key="twitterImage"
