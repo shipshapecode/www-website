@@ -9,8 +9,6 @@ export default function Document() {
         <meta content={imageURL} name="og:image" />
         <meta content={imageURL} name="twitter:image:src" />
         <meta content="summary_large_image" name="twitter:card" />
-        <meta content="@whiskeywebfm" name="twitter:creator" />
-        <meta content="@whiskeywebfm" name="twitter:site" />
       </Head>
       <body>
         <Main />
