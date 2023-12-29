@@ -202,6 +202,8 @@ export default function Home({ episodes }) {
     };
   });
 
+  const imageURL = 'http://whiskeywebandwhatnot.fm/images/www.png';
+
   return (
     <>
       <Head>
@@ -215,6 +217,14 @@ export default function Home({ episodes }) {
           content={description}
           name="twitter:description"
           key="twitterDescription"
+        />
+
+        <meta content={imageURL} name="og:image" key="ogImage" />
+        <meta content={imageURL} name="twitter:image:src" key="twitterImage" />
+        <meta
+          content="summary_large_image"
+          name="twitter:card"
+          key="twitterCard"
         />
       </Head>
       <div className="pb-12 pt-16 sm:pb-4 lg:pt-12">

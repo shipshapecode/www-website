@@ -35,6 +35,9 @@ export default function Episode({ episode, transcript }) {
 
   const title = `${episode.title} - Whiskey Web and Whatnot - Episode ${episode.episodeNumber}`;
 
+  const imageURL =
+    episode.episodeImage ?? 'http://whiskeywebandwhatnot.fm/images/www.png';
+
   return (
     <>
       <Head>
@@ -57,25 +60,13 @@ export default function Episode({ episode, transcript }) {
         <meta content={title} name="og:title" key="ogTitle" />
         <meta content={title} name="twitter:title" key="twitterTitle" />
 
-        {episode.episodeImage && (
-          <>
-            <meta
-              content={episode.episodeImage}
-              name="og:image"
-              key="ogImage"
-            />
-            <meta
-              content="summary_large_image"
-              name="twitter:card"
-              key="twitterCard"
-            />
-            <meta
-              content={episode.episodeImage}
-              name="twitter:image:src"
-              key="twitterImage"
-            />
-          </>
-        )}
+        <meta content={imageURL} name="og:image" key="ogImage" />
+        <meta
+          content="summary_large_image"
+          name="twitter:card"
+          key="twitterCard"
+        />
+        <meta content={imageURL} name="twitter:image:src" key="twitterImage" />
 
         {/* <meta content="player" name="twitter:card" key="twitterCard" />
         <meta content={episode.audio.src} name="twitter:player:stream" />
