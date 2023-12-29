@@ -3,8 +3,7 @@ import { Head, Html, Main, NextScript } from 'next/document';
 export default function Document() {
   return (
     <Html className="bg-white antialiased" lang="en">
-      <Head>
-      </Head>
+      <Head></Head>
       <body>
         <Main />
         <NextScript />
