@@ -221,11 +221,7 @@ export default function Home({ episodes }) {
 
         <meta content={imageURL} name="og:image" key="ogImage" />
         <meta content={imageURL} name="twitter:image:src" key="twitterImage" />
-        <meta
-          content="summary_large_image"
-          name="twitter:card"
-          key="twitterCard"
-        />
+        <meta content="summary" name="twitter:card" key="twitterCard" />
       </Head>
       <div className="pb-12 pt-16 sm:pb-4 lg:pt-12">
         <Container>
