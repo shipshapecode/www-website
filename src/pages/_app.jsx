@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import localFont from 'next/font/local';
 
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { AudioProvider } from '@/components/AudioProvider';
 import { Layout } from '@/components/Layout';
@@ -26,6 +27,7 @@ export default function App({ Component, pageProps }) {
           </style>
           <Component {...pageProps} />
           <Analytics />
+          <SpeedInsights />
         </Layout>
       </AudioProvider>
     </NextIntlClientProvider>

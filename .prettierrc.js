@@ -10,7 +10,7 @@ module.exports = {
   importOrderSortSpecifiers: true,
   singleQuote: true,
   plugins: [
-    require('@trivago/prettier-plugin-sort-imports'),
+    '@trivago/prettier-plugin-sort-imports',
     'prettier-plugin-tailwindcss',
   ],
 };
