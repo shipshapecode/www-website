@@ -1,4 +1,6 @@
-function RewindIcon(props) {
+import { type PlayerAPI } from '@/components/AudioProvider';
+
+function RewindIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
       aria-hidden="true"
@@ -16,7 +18,13 @@ function RewindIcon(props) {
   );
 }
 
-export function RewindButton({ player, amount = 10 }) {
+export function RewindButton({
+  player,
+  amount = 10,
+}: {
+  player: PlayerAPI;
+  amount?: number;
+}) {
   return (
     <button
       type="button"
