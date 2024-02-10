@@ -13,8 +13,7 @@ import { useAudioPlayer } from '@/components/AudioProvider';
 import { Container } from '@/components/Container';
 import { FormattedDate } from '@/components/FormattedDate';
 import { PlayButton } from '@/components/player/PlayButton';
-import { dasherize } from '@/utils/dasherize';
-import { truncate } from '@/utils/truncate';
+import { getAllEpisodes } from '@/lib/episodes';
 
 export default function Episode({ episode, transcript }) {
   let [isExpanded, setIsExpanded] = useState(false);
@@ -151,46 +150,13 @@ export default function Episode({ episode, transcript }) {
 }
 
 export async function getStaticProps({ params }) {
-  let feed = await parse('https://anchor.fm/s/e329dea0/podcast/rss');
-  let episode = feed.items
-    .filter((item) => item.itunes_episodeType !== 'trailer')
-    .map(
-      ({
-        id,
-        title,
-        description,
-        enclosures,
-        published,
-        itunes_episode,
-        itunes_episodeType,
-        itunes_image,
-      }) => {
-        const episodeNumber =
-          itunes_episodeType === 'bonus' ? 'Bonus' : itunes_episode;
-        const episodeSlug = dasherize(title);
-
-        return {
-          id: id.toString(),
-          title: `${title}`,
-          description: truncate(description, 260),
-          content: description,
-          episodeImage: itunes_image?.href,
-          episodeNumber,
-          episodeSlug,
-          published,
-          audio: enclosures.map((enclosure) => ({
-            src: enclosure.url,
-            type: enclosure.type,
-          }))[0],
-        };
-      },
-    )
-    .find(({ episodeNumber, episodeSlug }) => {
-      return (
-        String(episodeSlug) === String(params.episode) ||
-        String(episodeNumber) === String(params.episode)
-      );
-    });
+  const allEpisodes = await getAllEpisodes();
+  let episode = allEpisodes.find(({ episodeNumber, episodeSlug }) => {
+    return (
+      String(episodeSlug) === String(params.episode) ||
+      String(episodeNumber) === String(params.episode)
+    );
+  });
 
   if (!episode) {
     return {

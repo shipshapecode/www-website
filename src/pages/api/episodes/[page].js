@@ -1,6 +1,4 @@
-import { parse } from 'rss-to-json';
-
-import { truncate } from '@/utils/truncate';
+import { getAllEpisodes } from '@/lib/episodes';
 
 function paginate(array, pageSize, pageNumber) {
   // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
@@ -9,35 +7,8 @@ function paginate(array, pageSize, pageNumber) {
 
 export async function fetchEpisodes(page = 1) {
   const episodesPerPage = 15;
-  const feed = await parse('https://anchor.fm/s/e329dea0/podcast/rss');
 
-  const allEpisodes = feed.items
-    .filter((item) => item.itunes_episodeType !== 'trailer')
-    .map(
-      ({
-        description,
-        id,
-        title,
-        enclosures,
-        published,
-        itunes_episode,
-        itunes_episodeType,
-      }) => {
-        return {
-          id,
-          title: `${title}`,
-          published,
-          content: description,
-          description: truncate(description, 260),
-          episodeNumber:
-            itunes_episodeType === 'bonus' ? 'Bonus' : itunes_episode,
-          audio: enclosures.map((enclosure) => ({
-            src: enclosure.url,
-            type: enclosure.type,
-          }))[0],
-        };
-      },
-    );
+  const allEpisodes = await getAllEpisodes();
 
   const canLoadMore = page * episodesPerPage < allEpisodes.length;
 
