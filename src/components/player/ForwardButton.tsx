@@ -1,4 +1,6 @@
-function ForwardIcon(props) {
+import { type PlayerAPI } from '@/components/AudioProvider';
+
+function ForwardIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" {...props}>
       <path
@@ -23,7 +25,13 @@ function ForwardIcon(props) {
   );
 }
 
-export function ForwardButton({ player, amount = 10 }) {
+export function ForwardButton({
+  player,
+  amount = 10,
+}: {
+  player: PlayerAPI;
+  amount?: number;
+}) {
   return (
     <button
       type="button"

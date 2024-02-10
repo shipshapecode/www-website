@@ -1,4 +1,11 @@
-function MuteIcon({ muted, ...props }) {
+import { type PlayerAPI } from '@/components/AudioProvider';
+
+function MuteIcon({
+  muted,
+  ...props
+}: React.ComponentPropsWithoutRef<'svg'> & {
+  muted: boolean;
+}) {
   return (
     <svg
       aria-hidden="true"
@@ -28,18 +35,18 @@ function MuteIcon({ muted, ...props }) {
   );
 }
 
-export function MuteButton({ player }) {
+export function MuteButton({ player }: { player: PlayerAPI }) {
   return (
     <button
       type="button"
-      className="group relative rounded-md transition-colors hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:order-none"
+      className="group relative rounded-md hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:order-none"
       onClick={() => player.toggleMute()}
       aria-label={player.muted ? 'Unmute' : 'Mute'}
     >
       <div className="absolute -inset-4 md:hidden" />
       <MuteIcon
         muted={player.muted}
-        className="h-6 w-6 fill-slate-500 stroke-slate-500 transition-colors group-hover:fill-slate-700 group-hover:stroke-slate-700"
+        className="h-6 w-6 fill-slate-500 stroke-slate-500 group-hover:fill-slate-700 group-hover:stroke-slate-700"
       />
     </button>
   );

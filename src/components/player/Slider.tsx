@@ -6,18 +6,22 @@ import {
   useSlider,
   useSliderThumb,
 } from 'react-aria';
-import { useSliderState } from 'react-stately';
+import {
+  type SliderState,
+  type SliderStateOptions,
+  useSliderState,
+} from 'react-stately';
 
 import clsx from 'clsx';
 
-function parseTime(seconds) {
+function parseTime(seconds: number) {
   let hours = Math.floor(seconds / 3600);
   let minutes = Math.floor((seconds - hours * 3600) / 60);
   seconds = seconds - hours * 3600 - minutes * 60;
   return [hours, minutes, seconds];
 }
 
-function formatTime(seconds, totalSeconds = seconds) {
+function formatTime(seconds: Array<number>, totalSeconds = seconds) {
   let totalWithoutLeadingZeroes = totalSeconds.slice(
     totalSeconds.findIndex((x) => x !== 0),
   );
@@ -27,9 +31,16 @@ function formatTime(seconds, totalSeconds = seconds) {
     .join(':');
 }
 
-function Thumb(props) {
+function Thumb(props: {
+  index: number;
+  state: SliderState;
+  trackRef: React.RefObject<React.ElementRef<'div'>>;
+  isFocusVisible: boolean;
+  focusProps: ReturnType<typeof useFocusRing>['focusProps'];
+  onChangeStart?: () => void;
+}) {
   let { state, trackRef, focusProps, isFocusVisible, index } = props;
-  let inputRef = useRef(null);
+  let inputRef = useRef<React.ElementRef<'input'>>(null);
   let { thumbProps, inputProps } = useSliderThumb(
     { index, trackRef, inputRef },
     state,
@@ -45,11 +56,11 @@ function Thumb(props) {
       <div
         {...thumbProps}
         onMouseDown={(...args) => {
-          thumbProps.onMouseDown(...args);
+          thumbProps.onMouseDown?.(...args);
           props.onChangeStart?.();
         }}
         onPointerDown={(...args) => {
-          thumbProps.onPointerDown(...args);
+          thumbProps.onPointerDown?.(...args);
           props.onChangeStart?.();
         }}
         className={clsx(
@@ -67,8 +78,10 @@ function Thumb(props) {
   );
 }
 
-export function Slider(props) {
-  let trackRef = useRef(null);
+export function Slider(
+  props: SliderStateOptions<Array<number>> & { onChangeStart?: () => void },
+) {
+  let trackRef = useRef<React.ElementRef<'div'>>(null);
   let state = useSliderState(props);
   let { groupProps, trackProps, labelProps, outputProps } = useSlider(
     props,
@@ -93,11 +106,11 @@ export function Slider(props) {
       <div
         {...trackProps}
         onMouseDown={(...args) => {
-          trackProps.onMouseDown(...args);
+          trackProps.onMouseDown?.(...args);
           props.onChangeStart?.();
         }}
         onPointerDown={(...args) => {
-          trackProps.onPointerDown(...args);
+          trackProps.onPointerDown?.(...args);
           props.onChangeStart?.();
         }}
         ref={trackRef}
