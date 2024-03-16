@@ -98,12 +98,13 @@ function AboutSection(props) {
           !isExpanded && 'lg:line-clamp-4',
         )}
       >
-        Whiskey Web and Whatnot is an informal, whiskey fueled fireside chat
-        with your favorite web devs. We discuss all things web development
-        including JavaScript, TypeScript, EmberJS, React, Astro, SolidJS, CSS,
-        HTML, Web3, and more, but we also get to know the human side of
-        developers and their hobbies outside of work. Hosted by RobbieTheWagner
-        and Charles William Carpenter III of Ship Shape (https://shipshape.io).
+        Veteran web developers RobbieTheWagner and Charles William Carpenter III
+        host this informal, whiskey-fueled fireside chat with your favorite web
+        devs. They discuss all things web development including JavaScript,
+        TypeScript, EmberJS, React, Astro, SolidJS, CSS, HTML, Web3, and more.
+        They take a unique approach and focus on getting to know the human side
+        of developers and their hobbies outside of work, all while sampling a
+        new whiskey that they rate on their unique tentacle scale.
       </p>
       {!isExpanded && (
         <button
