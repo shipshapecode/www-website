@@ -241,7 +241,7 @@ export default function Home({ episodes }) {
             !isLoading && 'hidden',
           )}
         >
-          <div className="whiskey-loader relative ">
+          <div className="whiskey-loader relative">
             <LoadingIcon />
           </div>
         </div>

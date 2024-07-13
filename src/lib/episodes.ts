@@ -8,8 +8,8 @@ export interface Episode {
   id: string;
   title: string;
   published: number;
-  description: string;
-  content: string;
+  description?: string;
+  content?: string;
   episodeImage?: string;
   episodeNumber?: string | number;
   audio: {
@@ -25,7 +25,7 @@ export async function getAllEpisodes() {
         id: string(),
         title: string(),
         published: number(),
-        description: string(),
+        description: optional(string()),
         itunes_episode: optional(number()),
         itunes_episodeType: string(),
         itunes_image: optional(object({ href: optional(string()) })),
@@ -65,7 +65,7 @@ export async function getAllEpisodes() {
           id,
           title: `${title}`,
           content: description,
-          description: truncate(description, 260),
+          description: truncate(description ?? '', 260),
           episodeImage: itunes_image?.href,
           episodeNumber,
           episodeSlug,
